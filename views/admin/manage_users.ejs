@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+<div style="min-height: 100vh; background: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; padding: 40px;">
+
+  <div style="background: rgba(255, 255, 255, 0.96); padding: 30px 40px; border-radius: 14px; width: 100%; max-width: 1000px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 24px;">👥 All Registered Users</h2>
+
+    <% if (users.length === 0) { %>
+      <p style="text-align: center; color: #888;">No users found.</p>
+    <% } else { %>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+          <thead style="background-color: #1d3557; color: white;">
+            <tr>
+              <th style="padding: 14px; text-align: left;">Name</th>
+              <th style="padding: 14px; text-align: left;">Email</th>
+              <th style="padding: 14px; text-align: left;">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(u => { %>
+              <tr style="border-bottom: 1px solid #ecf0f1;">
+                <td style="padding: 14px;"><%= u.name %></td>
+                <td style="padding: 14px;"><%= u.email %></td>
+                <td style="padding: 14px;"><%= u.role.charAt(0).toUpperCase() + u.role.slice(1) %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="/admin/dashboard" style="text-decoration: none; background-color: #7f8c8d; color: white; padding: 10px 20px; border-radius: 8px; display: inline-block;">🔙 Back to Dashboard</a>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

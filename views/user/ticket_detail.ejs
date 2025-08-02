@@ -1,0 +1,62 @@
+<%- include('../partials/header') %>
+
+<div style="min-height: 100vh; background: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; padding: 50px;">
+
+  <div style="background: rgba(255, 255, 255, 0.96); padding: 40px 50px; border-radius: 16px; width: 100%; max-width: 850px; box-shadow: 0 10px 35px rgba(0,0,0,0.15);">
+
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 28px;">📄 Ticket Detail</h2>
+
+    <% 
+      let statusColor = '#e74c3c'; // Default (Open)
+      if (ticket.status === 'Resolved') statusColor = '#2ecc71';
+      else if (ticket.status === 'In Progress') statusColor = '#f1c40f';
+    %>
+
+    <p><strong>Subject:</strong> <%= ticket.subject %></p>
+    <p><strong>Description:</strong> <%= ticket.description %></p>
+    <p><strong>Category:</strong> <%= ticket.category.name %></p>
+    <p><strong>Status:</strong> 
+      <span style="padding: 4px 10px; border-radius: 14px; color: white; font-weight: 500; background-color: <%= statusColor %>;">
+        <%= ticket.status %>
+      </span>
+    </p>
+
+    <% if (ticket.attachment) { %>
+      <p><strong>Attachment:</strong> 
+        <a href="/uploads/<%= ticket.attachment %>" target="_blank" style="color: #2980b9; text-decoration: underline;">View File</a>
+      </p>
+    <% } %>
+
+    <hr style="margin: 30px 0;"/>
+
+    <h3 style="color: #2c3e50;">🧵 Threaded Conversation:</h3>
+    <% if (ticket.replies.length === 0) { %>
+      <p style="color: #7f8c8d;">No replies yet.</p>
+    <% } else { %>
+      <ul style="list-style: none; padding: 0;">
+        <% ticket.replies.forEach(reply => { %>
+          <li style="margin-bottom: 15px; padding: 12px; background-color: #ecf0f1; border-radius: 10px;">
+            <strong><%= reply.sender.name %>:</strong>
+            <div><%= reply.message %></div>
+            <small style="color: #888;"><%= reply.timestamp.toLocaleString() %></small>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <hr style="margin: 30px 0;" />
+
+    <h3 style="color: #2c3e50;">💬 Add Reply:</h3>
+    <form action="/tickets/reply/<%= ticket._id %>" method="POST">
+      <textarea name="message" rows="3" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"></textarea><br />
+      <button type="submit" style="margin-top: 10px; background-color: #3498db; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;">📤 Send Reply</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="/tickets/user/dashboard" style="text-decoration: none; background-color: #7f8c8d; color: white; padding: 10px 20px; border-radius: 8px; display: inline-block;">🔙 Back to Dashboard</a>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

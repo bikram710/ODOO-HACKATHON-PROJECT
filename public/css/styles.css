@@ -1,0 +1,121 @@
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #141e30, #243b55);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Centered Glass Card */
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  color: white;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Heading */
+.container h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+/* Input Fields */
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #d1d1d1;
+}
+
+form input {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+}
+
+form input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Button */
+form button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #00aaff;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+form button:hover {
+  background: #008ecc;
+}
+
+/* Alert Box */
+.alert {
+  background-color: rgba(255, 75, 75, 0.2);
+  border-left: 5px solid #ff4b4b;
+  color: #ffdddd;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* Bottom Text */
+p {
+  text-align: center;
+  margin-top: 16px;
+  color: #ccc;
+}
+
+p a {
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

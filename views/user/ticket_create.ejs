@@ -1,0 +1,59 @@
+
+<%- include('../partials/header') %>
+
+<div style="min-height: 100vh; background: url('https://images.unsplash.com/photo-1581091012184-7d93d5a31d5b?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; padding: 50px;">
+
+  <div style="background: rgba(255, 255, 255, 0.96); padding: 40px 50px; border-radius: 16px; width: 100%; max-width: 750px; box-shadow: 0 10px 35px rgba(0,0,0,0.15);">
+
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 24px;">📝 Create New Support Ticket</h2>
+
+    <% if (typeof error !== 'undefined') { %>
+      <div style="background-color: #ffe6e6; border-left: 5px solid #ff4d4d; padding: 12px 18px; margin-bottom: 20px; color: #a94442; border-radius: 8px;">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form action="/tickets/create" method="POST" enctype="multipart/form-data">
+
+      <!-- Subject -->
+      <div style="margin-bottom: 20px;">
+        <label for="subject" style="display: block; margin-bottom: 6px; font-weight: bold;">Subject:</label>
+        <input type="text" id="subject" name="subject" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;" />
+      </div>
+
+      <!-- Description -->
+      <div style="margin-bottom: 20px;">
+        <label for="description" style="display: block; margin-bottom: 6px; font-weight: bold;">Description:</label>
+        <textarea id="description" name="description" rows="5" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"></textarea>
+      </div>
+
+      <!-- Category -->
+      <div style="margin-bottom: 20px;">
+        <label for="category" style="display: block; margin-bottom: 6px; font-weight: bold;">Category:</label>
+        <select name="category" id="category" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+          <% categories.forEach(cat => { %>
+            <option value="<%= cat._id %>"><%= cat.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- Attachment -->
+      <div style="margin-bottom: 20px;">
+        <label for="attachment" style="display: block; margin-bottom: 6px; font-weight: bold;">Attachment (optional):</label>
+        <input type="file" id="attachment" name="attachment" />
+      </div>
+
+      <!-- Submit -->
+      <div style="text-align: center; margin-top: 30px;">
+        <button type="submit" style="background-color: #3498db; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">📨 Submit Ticket</button>
+      </div>
+    </form>
+
+    <div style="text-align: center; margin-top: 25px;">
+      <a href="/tickets/user/dashboard" style="text-decoration: none; background-color: #7f8c8d; color: white; padding: 10px 20px; border-radius: 8px; display: inline-block; font-weight: 600;">🔙 Back to Dashboard</a>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

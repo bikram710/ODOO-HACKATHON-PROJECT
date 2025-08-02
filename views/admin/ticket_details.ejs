@@ -1,0 +1,70 @@
+<%- include('../partials/header') %>
+
+<div style="min-height: 100vh; background: url('https://images.unsplash.com/photo-1605902711622-cfb43c4437f1?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; padding: 40px;">
+
+  <div style="background: rgba(255, 255, 255, 0.97); padding: 40px 50px; border-radius: 16px; width: 100%; max-width: 1150px; box-shadow: 0 12px 35px rgba(0,0,0,0.15);">
+
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 28px;">🎫 All Tickets</h2>
+
+    <% if (tickets.length === 0) { %>
+      <p style="text-align: center; color: #888;">No tickets found.</p>
+    <% } else { %>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px; background: white; border-radius: 12px; overflow: hidden;">
+          <thead style="background-color: #1d3557; color: white;">
+            <tr>
+              <th style="padding: 14px;">Subject</th>
+              <th style="padding: 14px;">Category</th>
+              <th style="padding: 14px;">Created By</th>
+              <th style="padding: 14px;">Assigned To</th>
+              <th style="padding: 14px;">Status</th>
+              <th style="padding: 14px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tickets.forEach(ticket => { 
+              let statusColor = '#e74c3c'; // Open
+              if (ticket.status === 'Resolved') statusColor = '#2ecc71';
+              else if (ticket.status === 'In Progress') statusColor = '#f1c40f';
+            %>
+              <tr style="border-bottom: 1px solid #ecf0f1;">
+                <td style="padding: 14px;"><%= ticket.subject %></td>
+                <td style="padding: 14px;"><%= ticket.category?.name || 'N/A' %></td>
+                <td style="padding: 14px;"><%= ticket.createdBy?.name || 'N/A' %></td>
+                <td style="padding: 14px;"><%= ticket.assignedTo?.name || 'Unassigned' %></td>
+                <td style="padding: 14px;">
+                  <span style=" background-color: ' + statusColor + '; color: white; padding: 6px 12px; border-radius: 20px; font-weight: 500 ">
+                      <%= ticket.status %>
+                  </span>
+                </td>
+                <td style="padding: 14px;">
+                  <form action="/admin/tickets/assign" method="POST" style="display: flex; flex-direction: column; gap: 8px;">
+                    <input type="hidden" name="ticketId" value="<%= ticket._id %>">
+                    <select name="agentId" required style="padding: 6px; border-radius: 6px; border: 1px solid #ccc;">
+                      <option disabled selected>Select Agent</option>
+                      <% agents.forEach(agent => { %>
+                        <option value="<%= agent._id %>" <%= ticket.assignedTo && ticket.assignedTo._id.toString() === agent._id.toString() ? 'selected' : '' %>>
+                          <%= agent.name %> (<%= agent.email %>)
+                        </option>
+                      <% }) %>
+                    </select>
+                    <button type="submit" style="background-color: #007bff; color: white; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer;">Assign</button>
+                  </form>
+
+                  <a href="#" style="color: #1d3557; text-decoration: underline; margin-top: 8px; display: inline-block;">Details</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="/admin/dashboard" style="text-decoration: none; background-color: #7f8c8d; color: white; padding: 10px 24px; border-radius: 8px; display: inline-block; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">🔙 Back to Dashboard</a>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

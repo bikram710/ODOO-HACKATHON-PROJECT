@@ -1,7 +1,26 @@
-
+# Node modules (⚠️ never commit this!)
 node_modules/
+
+# Environment variables (🔐 secrets like DB URI, session secrets)
 .env
-*.log
-__pycache__/
-dist/
+
+# System files / logs
 .DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Uploads or user-generated content (📂 like ticket attachments)
+uploads/
+
+# IDE or editor folders
+.vscode/
+.idea/
+
+# OS generated files
+*.log
+
+# Optional: coverage or build output
+coverage/
+dist/

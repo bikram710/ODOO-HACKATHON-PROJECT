@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<div style="min-height: 100vh; background: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; padding: 40px;">
+
+  <div style="background: rgba(255, 255, 255, 0.95); padding: 40px 50px; border-radius: 18px; width: 100%; max-width: 550px; box-shadow: 0 12px 30px rgba(0,0,0,0.2); text-align: center;">
+
+    <h2 style="color: #2c3e50; margin-bottom: 16px; font-size: 26px;">👨‍💼 Welcome, <%= user.name %> (Admin)</h2>
+    <p style="color: #555; margin-bottom: 28px; font-size: 16px;">What would you like to manage?</p>
+
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <a href="/admin/categories" 
+         style="padding: 12px 20px; background: #007bff; color: white; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s;">
+         📁 Manage Categories
+      </a>
+
+      <a href="/admin/users" 
+         style="padding: 12px 20px; background: #17a2b8; color: white; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s;">
+         👥 Manage Users
+      </a>
+
+      <a href="/admin/tickets" 
+         style="padding: 12px 20px; background: #28a745; color: white; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s;">
+         🎫 View All Tickets
+      </a>
+    </div>
+
+    <a href="/logout" 
+       style="display: inline-block; margin-top: 30px; background-color: #e74c3c; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: 0.3s;">
+      🔒 Logout
+    </a>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

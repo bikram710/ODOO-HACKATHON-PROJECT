@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+
+<div style="min-height: 100vh; background: url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; padding: 40px;">
+
+  <div style="background: rgba(255,255,255,0.96); padding: 40px 50px; border-radius: 16px; width: 100%; max-width: 1000px; box-shadow: 0 10px 35px rgba(0,0,0,0.15);">
+
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 10px;">👋 Welcome, <%= user.name %>!</h2>
+    <p style="text-align: center; color: #7f8c8d; font-size: 16px; margin-bottom: 20px;">This is your user dashboard.</p>
+
+    <div style="text-align: center; margin-bottom: 30px;">
+      <a href="/tickets/create" style="text-decoration: none; background-color: #3498db; color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin-right: 10px;">➕ Create New Ticket</a>
+      <a href="/logout" style="text-decoration: none; background-color: #e74c3c; color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold;">Logout</a>
+    </div>
+
+    <% if (typeof error !== 'undefined') { %>
+      <div style="background-color: #ffe6e6; border-left: 5px solid #ff4d4d; padding: 12px 18px; margin-bottom: 20px; color: #a94442; border-radius: 8px;">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <% if (tickets.length === 0) { %>
+      <p style="text-align: center; color: #888;">No tickets submitted yet.</p>
+    <% } else { %>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px; background: white; border-radius: 12px; overflow: hidden;">
+          <thead style="background-color: #1d3557; color: white;">
+            <tr>
+              <th style="padding: 14px;">Subject</th>
+              <th style="padding: 14px;">Category</th>
+              <th style="padding: 14px;">Status</th>
+              <th style="padding: 14px;">Updated</th>
+              <th style="padding: 14px;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tickets.forEach(ticket => { %>
+              <tr style="border-bottom: 1px solid #ecf0f1;">
+                <td style="padding: 14px;"><%= ticket.subject %></td>
+                <td style="padding: 14px;"><%= ticket.category?.name || 'N/A' %></td>
+                <td style="padding: 14px;">
+                  <span style="background-color: <%= ticket.status === 'Resolved' ? '#2ecc71' : (ticket.status === 'In Progress' ? '#f1c40f' : '#e74c3c') %>; color: white; padding: 6px 12px; border-radius: 20px; font-weight: 500;">
+                    <%= ticket.status %>
+                  </span>
+                </td>
+                <td style="padding: 14px;"><%= ticket.updatedAt.toLocaleString() %></td>
+                <td style="padding: 14px;">
+                  <a href="/tickets/view/<%= ticket._id %>" style="color: #1d3557; font-weight: bold; text-decoration: none;">🔍 View</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

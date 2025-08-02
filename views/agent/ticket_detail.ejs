@@ -1,0 +1,62 @@
+<%- include('../partials/header') %>
+
+<div style="min-height: 100vh; background: url('https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; padding: 40px;">
+
+  <div style="background: rgba(255,255,255,0.96); padding: 40px 50px; border-radius: 16px; width: 100%; max-width: 900px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);">
+
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 24px;">📄 Ticket Detail (Agent View)</h2>
+
+    <div style="font-size: 16px; color: #34495e; margin-bottom: 24px;">
+      <p><strong>Subject:</strong> <%= ticket.subject %></p>
+      <p><strong>Description:</strong> <%= ticket.description %></p>
+      <p><strong>Category:</strong> <%= ticket.category.name %></p>
+      <p><strong>Status:</strong> <span style="font-weight: 600;"><%= ticket.status %></span></p>
+      <p><strong>User:</strong> <%= ticket.createdBy.name %> | <%= ticket.createdBy.email %></p>
+      <% if (ticket.attachment) { %>
+        <p><strong>Attachment:</strong> <a href="/uploads/<%= ticket.attachment %>" target="_blank" style="color: #2980b9;">📎 View File</a></p>
+      <% } %>
+    </div>
+
+    <hr style="margin: 24px 0;" />
+
+    <h3 style="color: #2c3e50; margin-bottom: 12px;">🧵 Conversation:</h3>
+    <% if (ticket.replies.length === 0) { %>
+      <p style="color: #7f8c8d;">No replies yet.</p>
+    <% } else { %>
+      <ul style="list-style: none; padding-left: 0;">
+        <% ticket.replies.forEach(reply => { %>
+          <li style="margin-bottom: 12px; padding: 12px; background-color: #f4f6f7; border-radius: 8px;">
+            <strong style="color: #2c3e50;"><%= reply.sender.name %>:</strong>
+            <span><%= reply.message %></span><br />
+            <small style="color: #7f8c8d;">🕒 <%= reply.timestamp.toLocaleString() %></small>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <hr style="margin: 24px 0;" />
+
+    <h3 style="color: #2c3e50; margin-bottom: 12px;">💬 Reply / Update Status:</h3>
+    <form action="/agent/reply/<%= ticket._id %>" method="POST">
+      <label for="message" style="font-weight: 600;">Message:</label><br />
+      <textarea name="message" id="message" rows="3" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 16px;"></textarea>
+
+      <label for="status" style="font-weight: 600;">Status:</label><br />
+      <select name="status" id="status" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px;">
+        <option value="Open" <%= ticket.status === 'Open' ? 'selected' : '' %>>Open</option>
+        <option value="In Progress" <%= ticket.status === 'In Progress' ? 'selected' : '' %>>In Progress</option>
+        <option value="Resolved" <%= ticket.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
+        <option value="Closed" <%= ticket.status === 'Closed' ? 'selected' : '' %>>Closed</option>
+      </select>
+
+      <button type="submit" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Submit Reply & Update</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 28px;">
+      <a href="/agent/dashboard" style="background-color: #7f8c8d; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">🔙 Back to Dashboard</a>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

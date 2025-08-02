@@ -1,0 +1,123 @@
+<%- include('../partials/header') %>
+
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+</style>
+
+<div style="
+  min-height: 100vh;
+  background: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+">
+
+  <div style="
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 1100px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  ">
+
+    <h2 style="
+      text-align: center;
+      color: #2d3436;
+      margin-bottom: 24px;
+      font-size: 28px;
+    ">🎧 Agent Dashboard</h2>
+
+    <% if (typeof error !== 'undefined') { %>
+      <div style="
+        background-color: #ffe6e6;
+        border-left: 5px solid #ff4d4d;
+        padding: 12px 18px;
+        margin-bottom: 20px;
+        color: #a94442;
+        border-radius: 8px;
+      ">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <% if (tickets.length === 0) { %>
+      <p style="text-align: center; color: #7f8c8d; font-size: 16px;">No tickets assigned yet.</p>
+    <% } else { %>
+      <div style="overflow-x: auto;">
+        <table style="
+          width: 100%;
+          border-collapse: collapse;
+          background: #fff;
+          border-radius: 12px;
+          overflow: hidden;
+          font-size: 15px;
+        ">
+          <thead style="background-color: #1d3557; color: white;">
+            <tr>
+              <th style="padding: 14px;">Subject</th>
+              <th style="padding: 14px;">User</th>
+              <th style="padding: 14px;">Category</th>
+              <th style="padding: 14px;">Status</th>
+              <th style="padding: 14px;">Updated</th>
+              <th style="padding: 14px;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tickets.forEach(ticket => { %>
+              <% let statusColor = '#e74c3c'; %>
+              <% if (ticket.status === 'Resolved') statusColor = '#2ecc71'; %>
+              <% if (ticket.status === 'In Progress') statusColor = '#f1c40f'; %>
+              <tr style="border-bottom: 1px solid #ecf0f1;">
+                <td style="padding: 14px;"><%= ticket.subject %></td>
+                <td style="padding: 14px;"><%= ticket.createdBy.name %></td>
+                <td style="padding: 14px;"><%= ticket.category?.name || 'N/A' %></td>
+                <td style="padding: 14px;">
+                  <span style="
+                    padding: 6px 12px;
+                    border-radius: 20px;
+                    background: <%= statusColor %>;
+                    color: white;
+                    font-weight: 500;
+                  ">
+                    <%= ticket.status %>
+                  </span>
+                </td>
+                <td style="padding: 14px;"><%= ticket.updatedAt.toLocaleString() %></td>
+                <td style="padding: 14px;">
+                  <a href="/agent/view/<%= ticket._id %>" style="
+                    color: #1d3557;
+                    font-weight: bold;
+                    text-decoration: none;
+                  ">🔍 View</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+
+    <div style="text-align: center; margin-top: 28px;">
+      <a href="/logout" style="
+        background-color: #e74c3c;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      ">Logout</a>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
